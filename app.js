@@ -1,8 +1,11 @@
 const express = require('express');
 const ExpressError = require('./errorHandler')
+const queryParser = require('express-query-int')
 
 const app = express();
 
+
+app.use(queryParser());
 
 // function checkNums(arr) {
 //     const notNums = nums.filter(function (num) {
@@ -28,12 +31,13 @@ function mean(nums) {
 
 app.get("/mean", (req, res, next) => {
     try {
-        const nums = req.query.nums;
+        const nums = [req.query.nums];
         // const notNums = checkNums(nums);
         if (!nums) throw new ExpressError("nums are required", 400);
         // if (notNums) throw new ExpressError(`Invalid Number: ${notNums}`, 400)
-        
-        return res.json(mean(nums));
+        console.log(nums)
+        // console.log(mean(nums))
+        // return res.json(mean(nums));
     } catch (err) {
         next(err);
     }

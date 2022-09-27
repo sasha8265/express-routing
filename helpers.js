@@ -15,15 +15,15 @@ function convertNumsArray(stringsArr) {
 
 
 /** Create frequency counter from an array */
-function freqCounter(arr) {
+function countFrequency(arr) {
     return arr.reduce((acc, curr) => {
         if (!acc[curr]) {
-            acc[curr] = 1
+            acc[curr] = 1;
         } else {
-            acc[curr] += 1
+            acc[curr] += 1;
         }
-        return acc
-    }, {})
+        return acc;
+    }, {});
 }
 
 
@@ -58,7 +58,18 @@ function findMedian(nums) {
 
 /**  Find the mode (most frequent) of numbers passed in an array */
 function findMode(nums) {
+    const freqCounter = countFrequency(nums);
 
+    let count = 0;
+    let mode;
+
+    for (let key in freqCounter) {
+        if (freqCounter[key] > count) {
+            count = freqCounter[key];
+            mode = key;
+        }
+    }
+    return mode;
 }
 
 
@@ -80,5 +91,6 @@ function findMode(nums) {
 module.exports = {
     convertNumsArray,
     findMean,
-    findMedian
+    findMedian,
+    findMode
 }

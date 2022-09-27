@@ -43,6 +43,23 @@ app.get("/median", (req, res, next) => {
 })
 
 
+app.get("/mode", (req, res, next) => {
+    try {
+        const nums = req.query.nums;
+        if (!nums) throw new ExpressError("nums are required", 400);
+        const numsArr = convertNumsArray(nums.split(","));
+        const mode = findMode(numsArr);
+
+        res.send({
+            operation: "mode",
+            value: mode
+        })
+    } catch (err) {
+        next(err);
+    }
+})
+
+
 // If no other route matches, respond with a 404
 app.use((req, res, next) => {
     const e = new ExpressError("Page Not Found", 404)

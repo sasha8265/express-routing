@@ -24,18 +24,23 @@ app.get("/mean", (req, res, next) => {
     }
 })
 
-// const nums = [1, 2, "a", 5, "hi"];
 
-// app.get("/mean", (req, res) => {
-//     const notNums = checkNums(nums);
-//     if (!nums) {
-//         console.log('need numbers!')
-//     }
-//     if (notNums) {
-//         console.log(`Invalid Number: ${notNums}`)
-//     }
-//     return res.send(mean(nums));
-// })
+app.get("/median", (req, res, next) => {
+    try {
+        const nums = req.query.nums;
+        if (!nums) throw new ExpressError("nums are required", 400);
+        const numsArr = convertNumsArray(nums.split(","));
+        const median = findMedian(numsArr)
+
+        res.send({
+            operation: "median",
+            value: median
+        })
+
+    } catch (err) {
+        next(err);
+    }
+})
 
 
 // If no other route matches, respond with a 404

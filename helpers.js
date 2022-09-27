@@ -39,11 +39,24 @@ function findMean(nums) {
 
 /**  Find the median (midpoint) of numbers passed in an array */
 function findMedian(nums) {
+    nums.sort(function compareNumbers(a, b) {
+        return a - b;
+    });
 
+    const midIndex = Math.floor(nums.length / 2);
+    let median;
+
+    if (nums.length % 2 === 0) {
+        //if array is an even length, avarage out the 2 middle numbers
+        median = (nums[midIndex] + nums[midIndex - 1]) / 2;
+    } else {
+        median = nums[midIndex];
+    }
+    return median;
 }
 
 
-/**  Find the mode (most frequesnt) of numbers passed in an array */
+/**  Find the mode (most frequent) of numbers passed in an array */
 function findMode(nums) {
 
 }
@@ -66,5 +79,6 @@ function findMode(nums) {
 
 module.exports = {
     convertNumsArray,
-    findMean
+    findMean,
+    findMedian
 }

@@ -1,11 +1,12 @@
+const ExpressError = require('./errorHandler')
+
 /** Convert and validate an Array of strings to an array of numbers */
 function convertNumsArray(stringsArr) {
     let res = [];
     for (let i = 0; i < stringsArr.length; i++) {
         let numVal = Number(stringsArr[i]);
-
         if (isNaN(numVal)) {
-            return new Error(`"${stringsArr[i]}" is not a valid number`);
+            throw new ExpressError(`"${stringsArr[i]}" is not a valid number`, 400);
         }
         res.push(numVal);
     }
@@ -26,21 +27,6 @@ function freqCounter(arr) {
 }
 
 
-// function checkNums(arr) {
-//     const notNums = nums.filter(function (num) {
-//         if (isNaN(num)) {
-//             return num;
-//         }
-//     })
-// }
-
-// function checkNums(arr) {
-//     const notNums = arr.filter(item => typeof item !== 'number');
-//     return notNums;
-// }
-
-
-
 /**  Find the mean (avaerage) of numbers passed in an array */
 function findMean(nums) {
     let total = 0;
@@ -57,8 +43,28 @@ function findMedian(nums) {
 }
 
 
-
 /**  Find the mode (most frequesnt) of numbers passed in an array */
 function findMode(nums) {
-    
+
+}
+
+
+
+// function checkNums(arr) {
+//     const notNums = nums.filter(function (num) {
+//         if (isNaN(num)) {
+//             return num;
+//         }
+//     })
+// }
+
+// function checkNums(arr) {
+//     const notNums = arr.filter(item => typeof item !== 'number');
+//     return notNums;
+// }
+
+
+module.exports = {
+    convertNumsArray,
+    findMean
 }

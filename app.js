@@ -1,43 +1,24 @@
 const express = require('express');
 const ExpressError = require('./errorHandler')
-const queryParser = require('express-query-int')
-
+const { convertNumsArray, findMean, findMedian, findMode } = require('./helpers');
 const app = express();
 
 
-app.use(queryParser());
 
-// function checkNums(arr) {
-//     const notNums = nums.filter(function (num) {
-//         if (isNaN(num)) {
-//             return num;
-//         }
-//     })
-// }
-
-function checkNums(arr) {
-    const notNums = arr.filter(item => typeof item !== 'number');
-    return notNums;
-}
-
-function mean(nums) {
-    let total = 0;
-    for (let i = 0; i < nums.length; i++) {
-        total += nums[i];
-    }
-    return total / nums.length;
-}
 
 
 app.get("/mean", (req, res, next) => {
     try {
-        const nums = [req.query.nums];
-        // const notNums = checkNums(nums);
+        const nums = req.query.nums;
         if (!nums) throw new ExpressError("nums are required", 400);
-        // if (notNums) throw new ExpressError(`Invalid Number: ${notNums}`, 400)
-        console.log(nums)
-        // console.log(mean(nums))
-        // return res.json(mean(nums));
+        const numsArr = convertNumsArray(nums.split(","))
+        const mean = findMean(numsArr);
+
+        res.send({
+            operation: "mean",
+            value: mean
+        })        
+        
     } catch (err) {
         next(err);
     }
